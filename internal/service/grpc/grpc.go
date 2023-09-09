@@ -15,14 +15,10 @@ type GrpcService struct {
 	handler *handler.Handler
 }
 
-func (s GrpcService) FindBook(context.Context, *pb.AuthorRequest) (*pb.BookResponse, error) {
-	return &pb.BookResponse{
-		Title: "Book",
-	}, nil
+func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.BookResponse, error) {
+	return s.handler.FindBook(ctx, req)
 }
 
-func (s GrpcService) FindAuthor(context.Context, *pb.BookRequest) (*pb.AuthorResponse, error) {
-	return &pb.AuthorResponse{
-		LastName: "Smith",
-	}, nil
+func (s GrpcService) FindAuthor(ctx context.Context, req *pb.BookRequest) (*pb.AuthorResponse, error) {
+	return s.handler.FindAuthor(ctx, req)
 }
