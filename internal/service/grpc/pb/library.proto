@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package library;
+
+service Library {
+  rpc FindBook(AuthorRequest) returns (BookResponse) {}
+  rpc FindAuthor(BookRequest) returns (AuthorResponse) {}
+}
+
+message BookRequest {
+  string title = 1;
+}
+
+message AuthorRequest {
+  string lastName = 1;
+}
+
+message BookResponse {
+  string title = 1;
+}
+
+message AuthorResponse {
+  string lastName = 1;
+}
+
+option go_package = "internal/service/grpc/pb";
