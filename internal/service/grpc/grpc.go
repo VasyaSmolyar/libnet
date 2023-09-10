@@ -16,9 +16,9 @@ type GrpcService struct {
 }
 
 func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.BookResponse, error) {
-	return s.handler.FindBook(ctx, req)
+	return s.handler.FindBook(req)
 }
 
 func (s GrpcService) FindAuthor(ctx context.Context, req *pb.BookRequest) (*pb.AuthorResponse, error) {
-	return s.handler.FindAuthor(ctx, req)
+	return s.handler.FindAuthor(req)
 }
