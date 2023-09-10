@@ -3,6 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -26,9 +27,11 @@ type DBConnect struct {
 }
 
 func (db *DBConnect) connect() (*sql.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@/%s",
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		db.config.GetString("db.user"),
 		db.config.GetString("db.pass"),
+		db.config.GetString("db.host"),
+		db.config.GetString("db.port"),
 		db.config.GetString("db.name"),
 	)
 
@@ -40,6 +43,12 @@ func (db *DBConnect) connect() (*sql.DB, error) {
 	conn.SetConnMaxLifetime(time.Minute * time.Duration(db.config.GetInt("db.maxLifetime")))
 	conn.SetMaxOpenConns(db.config.GetInt("db.maxOpenConns"))
 	conn.SetMaxIdleConns(db.config.GetInt("db.maxIdleConns"))
+
+	if err = conn.Ping(); err != nil {
+		return nil, err
+	} else {
+		log.Println("DB connection established")
+	}
 
 	return conn, nil
 }
