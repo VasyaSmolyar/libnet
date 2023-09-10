@@ -2,10 +2,12 @@ package app
 
 import (
 	"fmt"
+	"libnet/internal/adaptor"
 	"libnet/internal/handler"
 	grpcService "libnet/internal/service/grpc"
 	"libnet/internal/service/grpc/pb"
 	"libnet/pkg/config"
+	"libnet/pkg/db"
 	"log"
 	"net"
 
@@ -21,7 +23,14 @@ func Init(configPath string) (*Server, error) {
 		return nil, err
 	}
 
-	return &Server{config: cfg, Handler: handler.Init()}, nil
+	db, err := db.Init(cfg)
+	if err != nil {
+		log.Println(err)
+		return nil, err
+	}
+	repo := adaptor.Init(db.Conn)
+
+	return &Server{config: cfg, Handler: handler.Init(repo)}, nil
 }
 
 type Server struct {

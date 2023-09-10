@@ -2,14 +2,16 @@ package handler
 
 import (
 	"context"
+	"libnet/internal/adaptor"
 	"libnet/internal/service/grpc/pb"
 )
 
-func Init() *Handler {
-	return &Handler{}
+func Init(repo *adaptor.Repository) *Handler {
+	return &Handler{repo: repo}
 }
 
 type Handler struct {
+	repo *adaptor.Repository
 }
 
 func (h Handler) FindBook(context.Context, *pb.AuthorRequest) (*pb.BookResponse, error) {
