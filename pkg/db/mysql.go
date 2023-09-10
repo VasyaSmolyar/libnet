@@ -12,12 +12,12 @@ import (
 )
 
 func Init(cfg *viper.Viper) (*DBConnect, error) {
-	conn := &DBConnect{config: cfg}
-	db, err := conn.connect()
+	db, err := connect(cfg)
 	if err != nil {
 		return nil, err
 	}
-	conn.Conn = db
+
+	conn := &DBConnect{config: cfg, Conn: db}
 	return conn, nil
 }
 
@@ -26,23 +26,23 @@ type DBConnect struct {
 	Conn   *sql.DB
 }
 
-func (db *DBConnect) connect() (*sql.DB, error) {
+func connect(cfg *viper.Viper) (*sql.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
-		db.config.GetString("db.user"),
-		db.config.GetString("db.pass"),
-		db.config.GetString("db.host"),
-		db.config.GetString("db.port"),
-		db.config.GetString("db.name"),
+		cfg.GetString("db.user"),
+		cfg.GetString("db.pass"),
+		cfg.GetString("db.host"),
+		cfg.GetString("db.port"),
+		cfg.GetString("db.name"),
 	)
 
-	conn, err := sql.Open(db.config.GetString("db.driver"), dsn)
+	conn, err := sql.Open(cfg.GetString("db.driver"), dsn)
 	if err != nil {
 		return nil, err
 	}
 
-	conn.SetConnMaxLifetime(time.Minute * time.Duration(db.config.GetInt("db.maxLifetime")))
-	conn.SetMaxOpenConns(db.config.GetInt("db.maxOpenConns"))
-	conn.SetMaxIdleConns(db.config.GetInt("db.maxIdleConns"))
+	conn.SetConnMaxLifetime(time.Minute * time.Duration(cfg.GetInt("db.maxLifetime")))
+	conn.SetMaxOpenConns(cfg.GetInt("db.maxOpenConns"))
+	conn.SetMaxIdleConns(cfg.GetInt("db.maxIdleConns"))
 
 	if err = conn.Ping(); err != nil {
 		return nil, err
