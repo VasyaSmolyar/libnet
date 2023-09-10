@@ -3,5 +3,14 @@
     "network": "tcp",
     "host": "",
     "port": "8080"
+  },
+  "db": {
+    "driver": "mysql",
+    "name": "library",
+    "pass": "0000",
+    "user": "mysql",
+    "maxLifetime": 3,
+    "maxOpenConns": 10,
+    "maxIdleConns": 10
   }
 }
