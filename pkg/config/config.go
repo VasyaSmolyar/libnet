@@ -3,6 +3,8 @@ package config
 import (
 	"errors"
 
+	errs "github.com/pkg/errors"
+
 	"github.com/spf13/viper"
 )
 
@@ -16,7 +18,7 @@ func LoadConfig(filename string) (*viper.Viper, error) {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {
 			return nil, errors.New("config file not found")
 		}
-		return nil, err
+		return nil, errs.WithStack(err)
 	}
 	return v, nil
 }

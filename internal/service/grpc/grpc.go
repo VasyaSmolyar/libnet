@@ -4,6 +4,8 @@ import (
 	"context"
 	"libnet/internal/action"
 	"libnet/internal/service/grpc/pb"
+
+	"github.com/pkg/errors"
 )
 
 func Init(repo action.Repository) pb.LibraryServer {
@@ -20,7 +22,7 @@ func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.B
 
 	books, err := act.Do(ctx, req.LastName)
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	res := make([]*pb.Book, 0)
@@ -41,7 +43,7 @@ func (s GrpcService) FindAuthor(ctx context.Context, req *pb.BookRequest) (*pb.A
 
 	authors, err := act.Do(ctx, req.Title)
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	res := make([]*pb.Author, 0)

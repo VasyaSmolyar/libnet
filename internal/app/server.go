@@ -10,6 +10,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
@@ -19,13 +20,13 @@ func Init(configPath string) (*Server, error) {
 	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	db, err := db.Init(cfg)
 	if err != nil {
 		log.Println(err)
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	repo := adaptor.Init(db.Conn)
 

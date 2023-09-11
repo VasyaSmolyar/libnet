@@ -7,6 +7,7 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/pkg/errors"
 
 	"github.com/spf13/viper"
 )
@@ -14,7 +15,7 @@ import (
 func Init(cfg *viper.Viper) (*DBConnect, error) {
 	db, err := connect(cfg)
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	conn := &DBConnect{config: cfg, Conn: db}
@@ -37,7 +38,7 @@ func connect(cfg *viper.Viper) (*sql.DB, error) {
 
 	conn, err := sql.Open(cfg.GetString("db.driver"), dsn)
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	conn.SetConnMaxLifetime(time.Minute * time.Duration(cfg.GetInt("db.maxLifetime")))
@@ -45,7 +46,7 @@ func connect(cfg *viper.Viper) (*sql.DB, error) {
 	conn.SetMaxIdleConns(cfg.GetInt("db.maxIdleConns"))
 
 	if err = conn.Ping(); err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	} else {
 		log.Println("DB connection established")
 	}
