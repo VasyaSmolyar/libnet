@@ -11,10 +11,14 @@ import (
 	"net"
 
 	"github.com/pkg/errors"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/grpclog"
 )
+
+type Config interface {
+	GetString(key string) string
+	GetInt(key string) int
+}
 
 func Init(configPath string) (*Server, error) {
 	cfg, err := config.LoadConfig(configPath)
@@ -34,7 +38,7 @@ func Init(configPath string) (*Server, error) {
 }
 
 type Server struct {
-	config *viper.Viper
+	config Config
 	repo   *adaptor.Repository
 }
 

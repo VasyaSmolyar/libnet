@@ -8,11 +8,14 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"
-
-	"github.com/spf13/viper"
 )
 
-func Init(cfg *viper.Viper) (*DBConnect, error) {
+type Config interface {
+	GetString(key string) string
+	GetInt(key string) int
+}
+
+func Init(cfg Config) (*DBConnect, error) {
 	db, err := connect(cfg)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -23,11 +26,11 @@ func Init(cfg *viper.Viper) (*DBConnect, error) {
 }
 
 type DBConnect struct {
-	config *viper.Viper
+	config Config
 	Conn   *sql.DB
 }
 
-func connect(cfg *viper.Viper) (*sql.DB, error) {
+func connect(cfg Config) (*sql.DB, error) {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s",
 		cfg.GetString("db.user"),
 		cfg.GetString("db.pass"),

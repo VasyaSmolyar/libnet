@@ -8,7 +8,12 @@ import (
 	"github.com/spf13/viper"
 )
 
-func LoadConfig(filename string) (*viper.Viper, error) {
+type Config interface {
+	GetString(key string) string
+	GetInt(key string) int
+}
+
+func LoadConfig(filename string) (Config, error) {
 	v := viper.New()
 
 	v.SetConfigFile(filename)
