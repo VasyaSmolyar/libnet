@@ -7,8 +7,9 @@ import (
 	"libnet/internal/service/grpc/pb"
 	"libnet/pkg/config"
 	"libnet/pkg/db"
-	"log"
 	"net"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"

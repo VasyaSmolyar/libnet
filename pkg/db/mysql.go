@@ -3,8 +3,9 @@ package db
 import (
 	"database/sql"
 	"fmt"
-	"log"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pkg/errors"

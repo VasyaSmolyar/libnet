@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"libnet/internal/app"
-	"log"
+
+	log "github.com/sirupsen/logrus"
 )
 
 var (
