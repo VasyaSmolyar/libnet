@@ -14,7 +14,7 @@ type Repository struct {
 	db *sql.DB
 }
 
-func (repo Repository) FindBook(ctx context.Context, lastName string) ([]*model.Book, error) {
+func (repo Repository) FindBooks(ctx context.Context, lastName string) ([]*model.Book, error) {
 	books := make([]*model.Book, 0)
 
 	var query = "SELECT books.id, books.title FROM books JOIN book_author ON books.id = book_author.book_id JOIN authors ON authors.id = book_author.author_id WHERE authors.last_name = ?;"
@@ -37,7 +37,7 @@ func (repo Repository) FindBook(ctx context.Context, lastName string) ([]*model.
 	return books, err
 }
 
-func (repo Repository) FindAuthor(ctx context.Context, title string) ([]*model.Author, error) {
+func (repo Repository) FindAuthors(ctx context.Context, title string) ([]*model.Author, error) {
 	authors := make([]*model.Author, 0)
 
 	var query = "SELECT authors.id, authors.last_name FROM authors JOIN book_author ON authors.id = book_author.author_id JOIN books ON books.id = book_author.book_id WHERE books.title = ?;"

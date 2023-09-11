@@ -26,7 +26,7 @@ func TestFindBooks(t *testing.T) {
 	m := dimock.NewMockBookRepository(ctrl)
 	m.
 		EXPECT().
-		FindBook(ctx, lastName).
+		FindBooks(ctx, lastName).
 		Return(res, nil)
 
 	act := action.NewFindBooks(m)

@@ -35,19 +35,19 @@ func (m *MockBookRepository) EXPECT() *MockBookRepositoryMockRecorder {
 	return m.recorder
 }
 
-// FindBook mocks base method.
-func (m *MockBookRepository) FindBook(ctx context.Context, lastName string) ([]*model.Book, error) {
+// FindBooks mocks base method.
+func (m *MockBookRepository) FindBooks(ctx context.Context, lastName string) ([]*model.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindBook", ctx, lastName)
+	ret := m.ctrl.Call(m, "FindBooks", ctx, lastName)
 	ret0, _ := ret[0].([]*model.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindBook indicates an expected call of FindBook.
-func (mr *MockBookRepositoryMockRecorder) FindBook(ctx, lastName interface{}) *gomock.Call {
+// FindBooks indicates an expected call of FindBooks.
+func (mr *MockBookRepositoryMockRecorder) FindBooks(ctx, lastName interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBook", reflect.TypeOf((*MockBookRepository)(nil).FindBook), ctx, lastName)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBooks", reflect.TypeOf((*MockBookRepository)(nil).FindBooks), ctx, lastName)
 }
 
 // MockAuthorRepository is a mock of AuthorRepository interface.
@@ -73,19 +73,19 @@ func (m *MockAuthorRepository) EXPECT() *MockAuthorRepositoryMockRecorder {
 	return m.recorder
 }
 
-// FindAuthor mocks base method.
-func (m *MockAuthorRepository) FindAuthor(ctx context.Context, title string) ([]*model.Author, error) {
+// FindAuthors mocks base method.
+func (m *MockAuthorRepository) FindAuthors(ctx context.Context, title string) ([]*model.Author, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindAuthor", ctx, title)
+	ret := m.ctrl.Call(m, "FindAuthors", ctx, title)
 	ret0, _ := ret[0].([]*model.Author)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindAuthor indicates an expected call of FindAuthor.
-func (mr *MockAuthorRepositoryMockRecorder) FindAuthor(ctx, title interface{}) *gomock.Call {
+// FindAuthors indicates an expected call of FindAuthors.
+func (mr *MockAuthorRepositoryMockRecorder) FindAuthors(ctx, title interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAuthor", reflect.TypeOf((*MockAuthorRepository)(nil).FindAuthor), ctx, title)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAuthors", reflect.TypeOf((*MockAuthorRepository)(nil).FindAuthors), ctx, title)
 }
 
 // MockRepository is a mock of Repository interface.
@@ -111,32 +111,32 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// FindAuthor mocks base method.
-func (m *MockRepository) FindAuthor(ctx context.Context, title string) ([]*model.Author, error) {
+// FindAuthors mocks base method.
+func (m *MockRepository) FindAuthors(ctx context.Context, title string) ([]*model.Author, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindAuthor", ctx, title)
+	ret := m.ctrl.Call(m, "FindAuthors", ctx, title)
 	ret0, _ := ret[0].([]*model.Author)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindAuthor indicates an expected call of FindAuthor.
-func (mr *MockRepositoryMockRecorder) FindAuthor(ctx, title interface{}) *gomock.Call {
+// FindAuthors indicates an expected call of FindAuthors.
+func (mr *MockRepositoryMockRecorder) FindAuthors(ctx, title interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAuthor", reflect.TypeOf((*MockRepository)(nil).FindAuthor), ctx, title)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindAuthors", reflect.TypeOf((*MockRepository)(nil).FindAuthors), ctx, title)
 }
 
-// FindBook mocks base method.
-func (m *MockRepository) FindBook(ctx context.Context, lastName string) ([]*model.Book, error) {
+// FindBooks mocks base method.
+func (m *MockRepository) FindBooks(ctx context.Context, lastName string) ([]*model.Book, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindBook", ctx, lastName)
+	ret := m.ctrl.Call(m, "FindBooks", ctx, lastName)
 	ret0, _ := ret[0].([]*model.Book)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// FindBook indicates an expected call of FindBook.
-func (mr *MockRepositoryMockRecorder) FindBook(ctx, lastName interface{}) *gomock.Call {
+// FindBooks indicates an expected call of FindBooks.
+func (mr *MockRepositoryMockRecorder) FindBooks(ctx, lastName interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBook", reflect.TypeOf((*MockRepository)(nil).FindBook), ctx, lastName)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindBooks", reflect.TypeOf((*MockRepository)(nil).FindBooks), ctx, lastName)
 }

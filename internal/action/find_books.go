@@ -14,5 +14,5 @@ func NewFindBooks(repo BookRepository) *FindBooks {
 }
 
 func (act FindBooks) Do(ctx context.Context, title string) ([]*model.Book, error) {
-	return act.repo.FindBook(ctx, title)
+	return act.repo.FindBooks(ctx, title)
 }

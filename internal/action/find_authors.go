@@ -14,5 +14,5 @@ func NewFindAuthors(repo AuthorRepository) *FindAuthors {
 }
 
 func (act FindAuthors) Do(ctx context.Context, title string) ([]*model.Author, error) {
-	return act.repo.FindAuthor(ctx, title)
+	return act.repo.FindAuthors(ctx, title)
 }

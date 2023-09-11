@@ -26,7 +26,7 @@ func TestFindAuthors(t *testing.T) {
 	m := dimock.NewMockAuthorRepository(ctrl)
 	m.
 		EXPECT().
-		FindAuthor(ctx, title).
+		FindAuthors(ctx, title).
 		Return(res, nil)
 
 	act := action.NewFindAuthors(m)
