@@ -40,7 +40,7 @@ func (repo Repository) FindBook(ctx context.Context, lastName string) ([]*model.
 func (repo Repository) FindAuthor(ctx context.Context, title string) ([]*model.Author, error) {
 	authors := make([]*model.Author, 0)
 
-	var query = "SELECT authors.last_name FROM authors JOIN book_author ON authors.id = book_author.author_id JOIN books ON books.id = book_author.book_id WHERE books.title = ?;"
+	var query = "SELECT authors.id, authors.last_name FROM authors JOIN book_author ON authors.id = book_author.author_id JOIN books ON books.id = book_author.book_id WHERE books.title = ?;"
 	rows, err := repo.db.QueryContext(ctx, query, title)
 	if err != nil {
 		return authors, err
@@ -48,7 +48,7 @@ func (repo Repository) FindAuthor(ctx context.Context, title string) ([]*model.A
 
 	for rows.Next() {
 		var id, lastName string
-		if err := rows.Scan(&id, &title); err != nil {
+		if err := rows.Scan(&id, &lastName); err != nil {
 			return authors, err
 		}
 		authors = append(authors, &model.Author{
