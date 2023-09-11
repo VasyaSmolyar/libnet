@@ -11,26 +11,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestFindBooks(t *testing.T) {
+func TestFindAuthors(t *testing.T) {
 	ctrl := gomock.NewController(t)
 	defer ctrl.Finish()
 
 	ctx := context.Background()
-	lastName := "King"
-	res := []*model.Book{
+	title := "It"
+	res := []*model.Author{
 		{
-			Title: "It",
+			LastName: "King",
 		},
 	}
 
-	m := dimock.NewMockBookRepository(ctrl)
+	m := dimock.NewMockAuthorRepository(ctrl)
 	m.
 		EXPECT().
-		FindBook(ctx, lastName).
+		FindAuthor(ctx, title).
 		Return(res, nil)
 
-	act := action.NewFindBooks(m)
-	authors, err := act.Do(ctx, lastName)
+	act := action.NewFindAuthors(m)
+	books, err := act.Do(ctx, title)
 	assert.NoError(t, err)
-	assert.Equal(t, res, authors)
+	assert.Equal(t, res, books)
 }
