@@ -2,23 +2,57 @@ package grpc
 
 import (
 	"context"
-	"libnet/internal/handler"
+	"libnet/internal/action"
 	"libnet/internal/service/grpc/pb"
 )
 
-func Init(handler *handler.Handler) pb.LibraryServer {
-	return &GrpcService{handler: handler}
+func Init(repo action.Repository) pb.LibraryServer {
+	return &GrpcService{repo: repo}
 }
 
 type GrpcService struct {
 	pb.UnimplementedLibraryServer
-	handler *handler.Handler
+	repo action.Repository
 }
 
 func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.BookResponse, error) {
-	return s.handler.FindBook(ctx, req)
+	act := action.NewFindBooks(s.repo)
+
+	books, err := act.Do(ctx, req.LastName)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*pb.Book, 0)
+	for _, book := range books {
+		res = append(res, &pb.Book{
+			Id:    book.Id,
+			Title: book.Title,
+		})
+	}
+
+	return &pb.BookResponse{
+		Books: res,
+	}, nil
 }
 
 func (s GrpcService) FindAuthor(ctx context.Context, req *pb.BookRequest) (*pb.AuthorResponse, error) {
-	return s.handler.FindAuthor(ctx, req)
+	act := action.NewFindAuthors(s.repo)
+
+	authors, err := act.Do(ctx, req.Title)
+	if err != nil {
+		return nil, err
+	}
+
+	res := make([]*pb.Author, 0)
+	for _, author := range authors {
+		res = append(res, &pb.Author{
+			Id:       author.Id,
+			LastName: author.LastName,
+		})
+	}
+
+	return &pb.AuthorResponse{
+		Authors: res,
+	}, nil
 }

@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"libnet/internal/adaptor"
-	"libnet/internal/handler"
 	grpcService "libnet/internal/service/grpc"
 	"libnet/internal/service/grpc/pb"
 	"libnet/pkg/config"
@@ -30,12 +29,12 @@ func Init(configPath string) (*Server, error) {
 	}
 	repo := adaptor.Init(db.Conn)
 
-	return &Server{config: cfg, Handler: handler.Init(repo)}, nil
+	return &Server{config: cfg, repo: repo}, nil
 }
 
 type Server struct {
-	config  *viper.Viper
-	Handler *handler.Handler
+	config *viper.Viper
+	repo   *adaptor.Repository
 }
 
 func (s *Server) Start() error {
@@ -51,7 +50,7 @@ func (s *Server) Start() error {
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
 
-	pb.RegisterLibraryServer(grpcServer, grpcService.Init(s.Handler))
+	pb.RegisterLibraryServer(grpcServer, grpcService.Init(s.repo))
 	err = grpcServer.Serve(listener)
 
 	return err
