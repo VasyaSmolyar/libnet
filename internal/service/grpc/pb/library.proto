@@ -3,8 +3,8 @@ syntax = "proto3";
 package library;
 
 service Library {
-  rpc FindBook(AuthorRequest) returns (BookResponse) {}
-  rpc FindAuthor(BookRequest) returns (AuthorResponse) {}
+  rpc FindBooks(AuthorRequest) returns (BookResponse) {}
+  rpc FindAuthors(BookRequest) returns (AuthorResponse) {}
 }
 
 message BookRequest {

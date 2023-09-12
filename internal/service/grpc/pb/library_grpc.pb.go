@@ -22,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibraryClient interface {
-	FindBook(ctx context.Context, in *AuthorRequest, opts ...grpc.CallOption) (*BookResponse, error)
-	FindAuthor(ctx context.Context, in *BookRequest, opts ...grpc.CallOption) (*AuthorResponse, error)
+	FindBooks(ctx context.Context, in *AuthorRequest, opts ...grpc.CallOption) (*BookResponse, error)
+	FindAuthors(ctx context.Context, in *BookRequest, opts ...grpc.CallOption) (*AuthorResponse, error)
 }
 
 type libraryClient struct {
@@ -34,18 +34,18 @@ func NewLibraryClient(cc grpc.ClientConnInterface) LibraryClient {
 	return &libraryClient{cc}
 }
 
-func (c *libraryClient) FindBook(ctx context.Context, in *AuthorRequest, opts ...grpc.CallOption) (*BookResponse, error) {
+func (c *libraryClient) FindBooks(ctx context.Context, in *AuthorRequest, opts ...grpc.CallOption) (*BookResponse, error) {
 	out := new(BookResponse)
-	err := c.cc.Invoke(ctx, "/library.Library/FindBook", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/library.Library/FindBooks", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *libraryClient) FindAuthor(ctx context.Context, in *BookRequest, opts ...grpc.CallOption) (*AuthorResponse, error) {
+func (c *libraryClient) FindAuthors(ctx context.Context, in *BookRequest, opts ...grpc.CallOption) (*AuthorResponse, error) {
 	out := new(AuthorResponse)
-	err := c.cc.Invoke(ctx, "/library.Library/FindAuthor", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/library.Library/FindAuthors", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -56,8 +56,8 @@ func (c *libraryClient) FindAuthor(ctx context.Context, in *BookRequest, opts ..
 // All implementations must embed UnimplementedLibraryServer
 // for forward compatibility
 type LibraryServer interface {
-	FindBook(context.Context, *AuthorRequest) (*BookResponse, error)
-	FindAuthor(context.Context, *BookRequest) (*AuthorResponse, error)
+	FindBooks(context.Context, *AuthorRequest) (*BookResponse, error)
+	FindAuthors(context.Context, *BookRequest) (*AuthorResponse, error)
 	mustEmbedUnimplementedLibraryServer()
 }
 
@@ -65,11 +65,11 @@ type LibraryServer interface {
 type UnimplementedLibraryServer struct {
 }
 
-func (UnimplementedLibraryServer) FindBook(context.Context, *AuthorRequest) (*BookResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindBook not implemented")
+func (UnimplementedLibraryServer) FindBooks(context.Context, *AuthorRequest) (*BookResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindBooks not implemented")
 }
-func (UnimplementedLibraryServer) FindAuthor(context.Context, *BookRequest) (*AuthorResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FindAuthor not implemented")
+func (UnimplementedLibraryServer) FindAuthors(context.Context, *BookRequest) (*AuthorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindAuthors not implemented")
 }
 func (UnimplementedLibraryServer) mustEmbedUnimplementedLibraryServer() {}
 
@@ -84,38 +84,38 @@ func RegisterLibraryServer(s grpc.ServiceRegistrar, srv LibraryServer) {
 	s.RegisterService(&Library_ServiceDesc, srv)
 }
 
-func _Library_FindBook_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Library_FindBooks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AuthorRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibraryServer).FindBook(ctx, in)
+		return srv.(LibraryServer).FindBooks(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/library.Library/FindBook",
+		FullMethod: "/library.Library/FindBooks",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibraryServer).FindBook(ctx, req.(*AuthorRequest))
+		return srv.(LibraryServer).FindBooks(ctx, req.(*AuthorRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Library_FindAuthor_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Library_FindAuthors_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(BookRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibraryServer).FindAuthor(ctx, in)
+		return srv.(LibraryServer).FindAuthors(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/library.Library/FindAuthor",
+		FullMethod: "/library.Library/FindAuthors",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibraryServer).FindAuthor(ctx, req.(*BookRequest))
+		return srv.(LibraryServer).FindAuthors(ctx, req.(*BookRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -128,12 +128,12 @@ var Library_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LibraryServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FindBook",
-			Handler:    _Library_FindBook_Handler,
+			MethodName: "FindBooks",
+			Handler:    _Library_FindBooks_Handler,
 		},
 		{
-			MethodName: "FindAuthor",
-			Handler:    _Library_FindAuthor_Handler,
+			MethodName: "FindAuthors",
+			Handler:    _Library_FindAuthors_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -17,7 +17,7 @@ type GrpcService struct {
 	repo action.Repository
 }
 
-func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.BookResponse, error) {
+func (s GrpcService) FindBooks(ctx context.Context, req *pb.AuthorRequest) (*pb.BookResponse, error) {
 	act := action.NewFindBooks(s.repo)
 
 	books, err := act.Do(ctx, req.LastName)
@@ -38,7 +38,7 @@ func (s GrpcService) FindBook(ctx context.Context, req *pb.AuthorRequest) (*pb.B
 	}, nil
 }
 
-func (s GrpcService) FindAuthor(ctx context.Context, req *pb.BookRequest) (*pb.AuthorResponse, error) {
+func (s GrpcService) FindAuthors(ctx context.Context, req *pb.BookRequest) (*pb.AuthorResponse, error) {
 	act := action.NewFindAuthors(s.repo)
 
 	authors, err := act.Do(ctx, req.Title)
