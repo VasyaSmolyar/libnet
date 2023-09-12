@@ -1,0 +1,19 @@
+mode: atomic
+libnet/internal/action/find_authors.go:12.57,14.2 1 1
+libnet/internal/action/find_authors.go:16.87,18.2 1 1
+libnet/internal/action/find_books.go:12.51,14.2 1 1
+libnet/internal/action/find_books.go:16.83,18.2 1 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:27.73,31.2 3 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:34.71,36.2 1 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:39.101,45.2 5 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:48.93,51.2 2 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:65.77,69.2 3 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:72.75,74.2 1 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:77.104,83.2 5 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:86.94,89.2 2 1
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:103.65,107.2 3 0
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:110.63,112.2 1 0
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:115.98,121.2 5 0
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:124.88,127.2 2 0
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:130.97,136.2 5 0
+libnet/internal/action/dimock/adaptor_interfaces_mock.go:139.89,142.2 2 0

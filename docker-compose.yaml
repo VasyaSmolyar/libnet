@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:latest 
+    container_name: db 
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment: 
+      MYSQL_USER: mysql
+      MYSQL_ROOT_PASSWORD: "0000"
+      MYSQL_PASSWORD: "0000"
+      MYSQL_DATABASE: library 
+    networks:
+      new:
+        aliases:
+          - database
+    volumes:
+      - my-db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 2s
+      retries: 5
+
+  app:
+    build:
+      context: .
+    container_name: app
+    ports: 
+      - "8080:8080"
+    depends_on: 
+      db:
+        condition: service_healthy
+    networks:
+      - "new"
+
+  migrate:
+    image: migrate/migrate
+    networks:
+      - new
+    volumes:
+      - ./migration:/migration
+    command: ["-path", "/migration", "-database",  "mysql://root:0000@tcp(db:3306)/library", "up"]
+    links: 
+        - db
+    depends_on: 
+      db:
+        condition: service_healthy
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - 8081:80
+    networks:
+      - new
+    depends_on: 
+      db:
+        condition: service_healthy
+
+volumes:
+  my-db:
+
+networks:
+  new:

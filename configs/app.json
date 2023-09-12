@@ -1,0 +1,18 @@
+{
+  "app": {
+    "network": "tcp",
+    "host": "",
+    "port": "8080"
+  },
+  "db": {
+    "host": "db",
+    "port": "3306",
+    "driver": "mysql",
+    "name": "library",
+    "pass": "0000",
+    "user": "mysql",
+    "maxLifetime": 3,
+    "maxOpenConns": 10,
+    "maxIdleConns": 10
+  }
+}
