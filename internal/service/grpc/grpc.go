@@ -25,7 +25,7 @@ func (s GrpcService) FindBooks(ctx context.Context, req *pb.AuthorRequest) (*pb.
 		return nil, errors.WithStack(err)
 	}
 
-	res := make([]*pb.Book, 0)
+	res := make([]*pb.Book, 0, len(books))
 	for _, book := range books {
 		res = append(res, &pb.Book{
 			Id:    book.Id,
@@ -46,7 +46,7 @@ func (s GrpcService) FindAuthors(ctx context.Context, req *pb.BookRequest) (*pb.
 		return nil, errors.WithStack(err)
 	}
 
-	res := make([]*pb.Author, 0)
+	res := make([]*pb.Author, 0, len(authors))
 	for _, author := range authors {
 		res = append(res, &pb.Author{
 			Id:       author.Id,
