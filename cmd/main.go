@@ -4,6 +4,7 @@ import (
 	"flag"
 	"libnet/internal/app"
 
+	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -16,7 +17,7 @@ func main() {
 
 	server, err := app.Init(*configPath)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(errors.WithStack(err))
 	}
 
 	server.Start()

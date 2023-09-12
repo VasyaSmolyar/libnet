@@ -50,7 +50,7 @@ func (s *Server) Start() error {
 	)
 
 	if err != nil {
-		grpclog.Fatalf("Failed to listen: %v", err)
+		grpclog.Fatalf("Failed to listen: %v", errors.WithStack(err))
 	}
 
 	var opts []grpc.ServerOption
@@ -59,5 +59,5 @@ func (s *Server) Start() error {
 	pb.RegisterLibraryServer(grpcServer, grpcService.Init(s.repo))
 	err = grpcServer.Serve(listener)
 
-	return err
+	return errors.WithStack(err)
 }
